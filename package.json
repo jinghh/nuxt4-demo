@@ -1,5 +1,5 @@
 {
-  "name": "nuxt3",
+  "name": "nuxt4",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -20,5 +20,9 @@
     "unplugin-auto-import": "^19.3.0",
     "unplugin-vue-components": "^28.8.0",
     "vant": "^4.9.21"
+  },
+  "devDependencies": {
+    "@types/mockjs": "^1.0.10",
+    "mockjs": "^1.1.0"
   }
 }

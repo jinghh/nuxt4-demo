@@ -3,7 +3,7 @@
   <div>
     <!-- 首页内容 -->
     <van-swipe :autoplay="3000">
-      <van-swipe-item v-for="(image, index) in images" :key="index">
+      <van-swipe-item v-for="(image, index) in banners" :key="index">
         <img :src="image" class="w-full h-40 object-cover">
       </van-swipe-item>
     </van-swipe>
@@ -27,17 +27,40 @@
   </div>
 </template>
 
-<script setup>
-import { ref } from 'vue'
+<script setup lang="ts">
+import { ref, onMounted } from 'vue';
+import {getBanners} from '../api/index';
+import { Product } from '~/interfaces/product.interface';
 
-const images = [
-  'https://via.placeholder.com/800x200',
-  'https://via.placeholder.com/800x200',
-  'https://via.placeholder.com/800x200'
-]
+// 类型定义
+interface HomePageData {
+  banners: string[];
+  products: Product[];
+}
 
-const products = [
-  { id: 1, name: '商品1', price: 99.9, stock: 10, image: 'https://via.placeholder.com/80' },
-  { id: 2, name: '商品2', price: 199.9, stock: 5, image: 'https://via.placeholder.com/80' }
-]
+const banners = ref<string[]>([]);
+const products = ref<Product[]>([]);
+
+const loadHomeData = async () => {
+  try {
+    console.log('请求轮播图接口:', '/api/home/banners');
+    const bannerData = await getBanners();
+    console.log('轮播图数据:', bannerData);
+    banners.value = bannerData;
+    
+    // console.log('请求热门商品接口:', '/api/home/products');
+    // const productData = await API.getHotProducts();
+    // products.value = productData;
+  } catch (error) {
+    console.error('数据加载失败:', {
+      error,
+      timestamp: new Date().toISOString()
+    });
+    
+    // 显示友好的错误提示
+    alert(`数据加载失败: ${error.message}`);
+  }
+};
+
+onMounted(loadHomeData);
 </script>

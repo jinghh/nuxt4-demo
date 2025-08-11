@@ -1,6 +1,6 @@
-// 修复自动导入配置
-import { VantResolver } from 'unplugin-vue-components/resolvers'
-import Components from 'unplugin-vue-components/vite'
+import { defineNuxtConfig } from 'nuxt/config';
+import Components from 'unplugin-vue-components/vite';
+import { VantResolver } from 'unplugin-vue-components/resolvers';
 
 export default defineNuxtConfig({
   modules: [
@@ -12,6 +12,7 @@ export default defineNuxtConfig({
   },
   plugins: [
     '~/plugins/vant.client.ts',
+    '~/plugins/mock.client.ts' // 添加Mock插件
   ],
   build: {
     transpile: ['vant'],
@@ -23,6 +24,10 @@ export default defineNuxtConfig({
         dts: true,
       }),
     ],
+  },
+  typescript: {
+    shim: false,
+    strict: true
   },
   compatibilityDate: '2025-07-17'
 })
